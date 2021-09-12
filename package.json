@@ -1,23 +1,30 @@
 {
   "name": "restapi-jwt",
   "version": "1.0.0",
-  "description": "",
+  "description": "A very simple REST API developed in nodejs",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index",
-    "dev": "nodemon ./src/index"
+    "start": "babel-node ./src/index",
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon -r dotenv/config ./src/index --exec babel-node"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pablo Rodríguez (prodrigu)",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
     "dotenv": "^10.0.0",
     "nodemon": "^2.0.12"
   }
