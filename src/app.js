@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import pkg from '../package.json';
+import productsRoute from './routes/products.routes';
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
         version: app.get('pkg').version
     });
 });
+
+app.use('/products', productsRoute);
 
 
 export default app;

@@ -1,0 +1,1 @@
+export * as ProductCtrlr from './products.controllers';

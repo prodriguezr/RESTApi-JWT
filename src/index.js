@@ -1,5 +1,8 @@
 import app from './app';
+import * as Config from './config/env';
 
-app.listen(process.env.PORT || 4200);
+import './config/database';
 
-console.log('Server listening on port', process.env.PORT || 4200);
+app.listen(Config.env.Port);
+
+console.log('Server listening on port', Config.env.Port);
