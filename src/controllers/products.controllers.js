@@ -1,4 +1,5 @@
-import Product from '../models/Product';
+import { ProductCtrlr } from '.';
+import { Product } from '../models';
 
 export const createProduct = async (req, res) => {
     const { name, category, price, imgURL } = req.body;
@@ -13,7 +14,8 @@ export const createProduct = async (req, res) => {
         name,
         category,
         price,
-        imgURL
+        imgURL,
+        last_upd_by: req.uid
     });
 
     const product = await newProduct.save();
@@ -32,7 +34,7 @@ export const getProductById = async (req, res) => {
 
     const product = await Product.findOne({ _id: productId, deleted: false });
 
-    if (!product) return res.status(400).json({ msg: 'Product not found' });
+    if (!product) return res.status(404).json({ msg: 'Product not found' });
 
     res.json({ data: { product } });
 }
@@ -42,11 +44,15 @@ export const updateProductById = async (req, res) => {
 
     const existsProduct = await Product.findById(productId);
 
-    if (!existsProduct) return res.status(400).json({ msg: 'Product not found' });
+    if (!existsProduct) return res.status(404).json({ msg: 'Product not found' });
 
     const product = await Product.findByIdAndUpdate(productId, req.body, {
         new: true
     });
+
+    product.last_upd_by = re.uid;
+    
+    await product.save();
     
     res.status(200).json({ data: { product } });
 }
@@ -56,7 +62,7 @@ export const deleteProductById = async (req, res) => {
 
     const existsProduct = await Product.findById(productId);
 
-    if (!existsProduct) return res.status(400).json({ msg: 'Product not found' });
+    if (!existsProduct) return res.status(404).json({ msg: 'Product not found' });
 
     existsProduct.deleted = true;
     
